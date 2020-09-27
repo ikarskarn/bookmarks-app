@@ -1,5 +1,5 @@
 import React, { Component } from  'react';
-//import { withRouter } from 'react-router-dom';
+
 import BookmarksContext from '../BookmarksContext';
 import config from '../config'
 import './AddBookmark.css';
@@ -9,6 +9,12 @@ const Required = () => (
 )
 
 class AddBookmark extends Component {
+	
+	
+	
+	
+	
+	
 	static contextType = BookmarksContext;
 
 	state = {
@@ -23,7 +29,7 @@ class AddBookmark extends Component {
 			title: title.value,
 			url: url.value,
 			description: description.value,
-			rating: rating.value,
+			rating: Number(rating.value),
 		}
 		this.setState({ error: null })
 		fetch(config.API_ENDPOINT, {
@@ -36,11 +42,7 @@ class AddBookmark extends Component {
 		})
 		.then(res => {
 			if (!res.ok) {
-				// get the error message from the response,
-				return res.json().then(error => {
-					// then throw it
-					throw error
-				})
+				return res.json().then(error => Promise.reject(error))
 			}
 			return res.json()
 		})
@@ -53,9 +55,11 @@ class AddBookmark extends Component {
 			this.props.history.push('/')
 		})
 		.catch(error => {
+			console.error(error)
 			this.setState({ error })
 		})
 	}
+	
 	handleClickCancel = () => {
 		this.props.history.push('/')
 	};
@@ -65,7 +69,10 @@ class AddBookmark extends Component {
 		return (
 			<section className='AddBookmark'>
 				<h2>Create a bookmark</h2>
-				<form className='AddBookmark__form' onSubmit={this.handleSubmit} >
+				<form 
+					className='AddBookmark__form' 
+					onSubmit={this.handleSubmit}
+				>
 					<div className='AddBookmark__error' role='alert' >
 						{error && <p>{error.message}</p>}
 					</div>
@@ -123,10 +130,7 @@ class AddBookmark extends Component {
 						/>
 					</div>
 					<div className='AddBookmark__buttons'>
-						<button 
-							type='button'
-							onClick={this.handleClickCancel}
-						>
+						<button type='button' onClick={this.handleClickCancel}>
 							Cancel
 						</button>
 						{' '}

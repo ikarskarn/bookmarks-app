@@ -1,5 +1,5 @@
 import React, { Component } from  'react';
-import PropTypes from 'prop-types';
+
 import BookmarksContext from '../BookmarksContext';
 import config from '../config'
 import './EditBookmark.css';
@@ -9,7 +9,17 @@ const Required = () => (
 )
 
 class EditBookmark extends Component {
+    
+    
+    
+    
+    
+    
+    
+    
+    
     static contextType = BookmarksContext;
+    
     state = {
         error: null,
         id: '',
@@ -106,17 +116,22 @@ class EditBookmark extends Component {
     handleClickCancel = () => {
         this.props.history.push('/')
     };
-
     render() {
         const { error, title, url, description, rating } = this.state
         return (
             <section className='EditBookmark'>
                 <h2>Edit bookmark</h2>
-                <form className='EditBookmark__form' onSubmit={this.handleSubmit} >
+                <form 
+                    className='EditBookmark__form' 
+                    onSubmit={this.handleSubmit} 
+                >
                     <div className='EditBookmark__error' role='alert'>
                         {error && <p>{error.message}</p>}
                     </div>
-                    <input type='hidden' name='id' />
+                    <input 
+                        type='hidden' 
+                        name='id' 
+                    />
                     <div>
                         <label htmlFor='title'>
                             Title
@@ -178,14 +193,14 @@ class EditBookmark extends Component {
                         />
                     </div>
                     <div className='EditBookmark__buttons'>
-                            <button type='button' onClick={this.handleClickCancel}>
-                                Cancel
-                            </button>
-                            {' '}
-                            <button type='submit'>
-                                Save
-                            </button>
-                        </div>
+                        <button type='button' onClick={this.handleClickCancel}>
+                            Cancel
+                        </button>
+                        {' '}
+                        <button type='submit'>
+                            Save
+                        </button>
+                    </div>
                 </form>
             </section>
         );

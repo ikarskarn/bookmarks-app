@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Link } from 'react-router-dom';
 import Rating from '../Rating/Rating';
 import BookmarksContext from '../BookmarksContext';
@@ -15,9 +16,7 @@ function deleteBookmarkRequest(bookmarkId, cb) {
 	})
 	.then(response => {
 		if(!response.ok) {
-			return response.json().then(error => {
-				throw error
-			})
+			return response.json().then(error => Promise.reject(error))
 		}
 		return response.json()
 	})
@@ -39,8 +38,7 @@ export default function BookmarkItem(props) {
 							<a
 								href={props.url}
 								target='_blank'
-								rel='noopener noreferrer'
-							>
+								rel='noopener noreferrer'>
 								{props.title}
 							</a>
 						</h3>
@@ -50,12 +48,14 @@ export default function BookmarkItem(props) {
 						{props.description}
 					</p>
 					<div className='BookmarkItem__buttons'>
-						<Link to={`/edit/${props.id}`}>Edit</Link>
+						<Link to={`/edit/${props.id}`}>
+							Edit
+						</Link>
 						{' '}
 						<button
 							className='BookmarkItem__description'
-							onClick={
-								() => deleteBookmarkRequest(props.id, context.deleteBookmark)
+							onClick={() => 
+								deleteBookmarkRequest(props.id, context.deleteBookmark)
 							}
 						>
 							Delete
@@ -70,3 +70,14 @@ export default function BookmarkItem(props) {
 BookmarkItem.defaultProps = {
 	onClickDelete: () => {},
 }
+
+
+
+
+
+
+
+
+
+
+
